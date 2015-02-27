@@ -53,7 +53,6 @@ $.fn.responsibleHeight = function (options) {
 				max_height = $(this).outerHeight();
 			}
 		});
-
 		self.css('height', max_height + 'px');
 	}
 
