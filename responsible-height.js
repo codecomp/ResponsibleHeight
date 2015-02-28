@@ -103,7 +103,7 @@ $.fn.responsibleHeight = function (options) {
 		var height 			= 0;
 
 
-		self.each(function ( index, element ) {
+		self.each(function ( index ) {
 			debug(index);
 			//Fet the element whose size we will be controlling
 			var element = get_element( self.eq(index) );
