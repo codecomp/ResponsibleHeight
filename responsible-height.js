@@ -5,6 +5,7 @@ $.fn.responsibleHeight = function (options) {
 	 ========================================================================== */
 
 	var defaults = {
+		'delay' : 200,
 		'widths' : [
 			[1300, 10],
 			[1000, 8],
@@ -19,7 +20,8 @@ $.fn.responsibleHeight = function (options) {
 	options  	= $.extend({}, defaults, options);
 	//Set self to the elements that this function has been applied to
 	var self 	= this;
-	var active 	= false;
+	//Setup empty timeout
+	var resizeId = setTimeout(function(){}, 100);
 
 	//log the options
 	if (options.verbose) {
@@ -51,7 +53,16 @@ $.fn.responsibleHeight = function (options) {
 
 	// Setup resize on window resize
 	$(window).resize(function () {
-		resize();
+		if( options.dely == 0 ){
+			//If the user chooses run resize function constantly during resize
+			resize();
+		} else {
+			//Only run the plugin options delay milliseconds after the resize ha been last called
+			clearTimeout(resizeId);
+			resizeId = setTimeout(function(){
+				resize();
+			}, options.delay);
+		}
 	});
 
 	//run the resize once upon creation
