@@ -36,7 +36,7 @@ $.fn.responsibleHeight = function (options) {
 		//Loop through all our set widths
 		for (i = 0; i < options.widths.length; i++) {
 			//get the the desired column count
-			if( $(window).width() > options.widths[i][0] ){
+			if( window_check(options.widths[i][0])  ){
 				if( options.widths[i][1] != 1 ){
 					//If one column is required at this resolution reset the heights of all elements
 					debug( 'Columns: '+options.widths[i][1] );
@@ -71,6 +71,42 @@ $.fn.responsibleHeight = function (options) {
 	/* ==========================================================================
 	 Functions
 	 ========================================================================== */
+
+	//Check to see if the window is larger than the css media query size
+	function window_check(size){
+
+		//Check the media query size
+		if (window.matchMedia) {
+			var mql = window.matchMedia('screen and (max-width: '+size+'px)');
+			if (mql.matches){
+				// if media query matches and this media query is supported
+				return true
+			} else {
+				return false
+			}
+		}
+
+		//TODO Test this statement bock
+		//Check if Modernizr is installed
+		if (typeof Modernizr !== 'undefined') {
+			//Check to see if mq mthod exists
+			if (typeof Modernizr.mq !== 'undefined') {
+				if(Modernizr.mq('(max-width: '+size+'px)')) {
+					return true
+				} else {
+					return false
+				}
+			}
+		}
+
+		//If we have no support get close with jQuery
+		if( $(window).width() > size ){
+			return true;
+		} else {
+			return false;
+		}
+
+	}
 
 	//Returns the element for height calculations
 	function get_element( element ){
