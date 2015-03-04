@@ -6,13 +6,7 @@ $.fn.responsibleHeight = function (options) {
 
 	var defaults = {
 		'delay' : 200,
-		'widths' : [
-			[1300, 10],
-			[1000, 8],
-			[700, 4],
-			[40, 2],
-			[0, 1]
-		],
+		'widths' : [],
 		'child' : false,
 		'verbose': false
 	};
@@ -72,12 +66,17 @@ $.fn.responsibleHeight = function (options) {
 	 Functions
 	 ========================================================================== */
 
+	if (typeof options.widths == 'undefined' || options.widths.length == 0) {
+		debug('Widths option not set');
+		return false;
+	}
+
 	//Check to see if the window is larger than the css media query size
 	function window_check(size){
 
 		//Check the media query size
 		if (window.matchMedia) {
-			var mql = window.matchMedia('screen and (max-width: '+size+'px)');
+			var mql = window.matchMedia('screen and (min-width: '+size+'px)');
 			if (mql.matches){
 				// if media query matches and this media query is supported
 				return true
@@ -91,7 +90,7 @@ $.fn.responsibleHeight = function (options) {
 		if (typeof Modernizr !== 'undefined') {
 			//Check to see if mq mthod exists
 			if (typeof Modernizr.mq !== 'undefined') {
-				if(Modernizr.mq('(max-width: '+size+'px)')) {
+				if(Modernizr.mq('(min-width: '+size+'px)')) {
 					return true
 				} else {
 					return false
