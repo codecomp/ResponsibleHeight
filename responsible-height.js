@@ -26,6 +26,11 @@ $.fn.responsibleHeight = function (options) {
 	 Logic
 	 ========================================================================== */
 
+	if (typeof options.widths == 'undefined' || options.widths.length == 0) {
+		debug('Widths options missing');
+		return false;
+	}
+
 	function resize() {
 		//Loop through all our set widths
 		for (i = 0; i < options.widths.length; i++) {
