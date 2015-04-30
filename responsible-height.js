@@ -1,4 +1,5 @@
-$.fn.responsibleHeight = function (options) {
+(function($){
+	$.fn.responsibleHeight = function (options) {
 
 	/* ==========================================================================
 	 Setup
@@ -26,7 +27,7 @@ $.fn.responsibleHeight = function (options) {
 	 Logic
 	 ========================================================================== */
 
-	if (typeof options.widths == 'undefined' || options.widths.length == 0) {
+	if (typeof options.widths == 'undefined' || options.widths.length === 0) {
 		debug('Widths options missing');
 		return false;
 	}
@@ -52,7 +53,7 @@ $.fn.responsibleHeight = function (options) {
 
 	// Setup resize on window resize
 	$(window).resize(function () {
-		if( options.dely == 0 ){
+		if( options.dely === 0 ){
 			//If the user chooses run resize function constantly during resize
 			resize();
 		} else {
@@ -71,7 +72,7 @@ $.fn.responsibleHeight = function (options) {
 	 Functions
 	 ========================================================================== */
 
-	if (typeof options.widths == 'undefined' || options.widths.length == 0) {
+	if (typeof options.widths == 'undefined' || options.widths.length === 0) {
 		debug('Widths option not set');
 		return false;
 	}
@@ -84,9 +85,9 @@ $.fn.responsibleHeight = function (options) {
 			var mql = window.matchMedia('screen and (min-width: '+size+'px)');
 			if (mql.matches){
 				// if media query matches and this media query is supported
-				return true
+				return true;
 			} else {
-				return false
+				return false;
 			}
 		}
 
@@ -96,9 +97,9 @@ $.fn.responsibleHeight = function (options) {
 			//Check to see if mq mthod exists
 			if (typeof Modernizr.mq !== 'undefined') {
 				if(Modernizr.mq('(min-width: '+size+'px)')) {
-					return true
+					return true;
 				} else {
-					return false
+					return false;
 				}
 			}
 		}
@@ -116,7 +117,7 @@ $.fn.responsibleHeight = function (options) {
 	function get_element( element ){
 		//throw new Error("Got to get_element");
 		//Check to see if we're finding child elements
-		if( options.child != false ){
+		if( options.child !== false ){
 			return element.find( options.child );
 		}
 		return element;
@@ -179,3 +180,4 @@ $.fn.responsibleHeight = function (options) {
 	}
 
 };
+})(jQuery);
