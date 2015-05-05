@@ -57,7 +57,7 @@
 				//If the user chooses run resize function constantly during resize
 				resize();
 			} else {
-				//Only run the plugin options delay milliseconds after the resize ha been last called
+				//Only run the plugin options delay milliseconds after the resize has been last called
 				clearTimeout(resizeId);
 				resizeId = setTimeout(function(){
 					resize();
@@ -66,7 +66,7 @@
 		});
 
 		//run the resize once upon creation
-		resize();
+		$(window).on('load', resize);
 
 		/* ==========================================================================
 		 Functions
@@ -146,7 +146,7 @@
 
 			self.each(function ( index ) {
 				debug(index);
-				//Fet the element whose size we will be controlling
+				//Get the element whose size we will be controlling
 				var element = get_element( self.eq(index) );
 				//Set col to the current column
 				col++;
