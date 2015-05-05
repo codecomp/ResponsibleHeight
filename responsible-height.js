@@ -6,10 +6,11 @@
 		 ========================================================================== */
 
 		var defaults = {
+			'global':	false,
 			'delay': 	200,
 			'widths': 	[],
 			'child': 	false,
-			'verbose': false
+			'verbose': 	false
 		};
 		//Add missing variables to the options object from the defaults
 		options  	= $.extend({}, defaults, options);
@@ -33,16 +34,23 @@
 		}
 
 		function resize() {
+			//If we are not using columns resize al elements globally
+			if(options.global){
+				debug( 'Globally resizing' );
+				set_height_blocks( 999999 );
+				return;
+			}
+
 			//Loop through all our set widths
 			for (var i = 0; i < options.widths.length; i++) {
 				//get the the desired column count
 				if( window_check(options.widths[i][0])  ){
 					if( options.widths[i][1] != 1 ){
-						//If one column is required at this resolution reset the heights of all elements
+						//If we are doing anything but one column run the logic
 						debug( 'Columns: '+options.widths[i][1] );
 						set_height_blocks( options.widths[i][1] );
 					} else{
-						//re-height the elements
+						//If one column is needed reset the heights of all blocks
 						debug( 'Columns: '+options.widths[i][1] );
 						reset_height_block();
 					}
