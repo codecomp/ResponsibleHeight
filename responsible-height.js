@@ -6,9 +6,9 @@
 		 ========================================================================== */
 
 		var defaults = {
-			'delay' : 200,
-			'widths' : [],
-			'child' : false,
+			'delay': 	200,
+			'widths': 	[],
+			'child': 	false,
 			'verbose': false
 		};
 		//Add missing variables to the options object from the defaults
@@ -34,7 +34,7 @@
 
 		function resize() {
 			//Loop through all our set widths
-			for (i = 0; i < options.widths.length; i++) {
+			for (var i = 0; i < options.widths.length; i++) {
 				//get the the desired column count
 				if( window_check(options.widths[i][0])  ){
 					if( options.widths[i][1] != 1 ){
@@ -53,7 +53,7 @@
 
 		// Setup resize on window resize
 		$(window).resize(function () {
-			if( options.dely === 0 ){
+			if( options.delay === 0 ){
 				//If the user chooses run resize function constantly during resize
 				resize();
 			} else {
@@ -83,12 +83,9 @@
 			//Check the media query size
 			if (window.matchMedia) {
 				var mql = window.matchMedia('screen and (min-width: '+size+'px)');
-				if (mql.matches){
-					// if media query matches and this media query is supported
-					return true;
-				} else {
-					return false;
-				}
+
+				//Return the result of the match
+				return mql.matches;
 			}
 
 			//TODO Test this statement bock
@@ -96,11 +93,9 @@
 			if (typeof Modernizr !== 'undefined') {
 				//Check to see if mq mthod exists
 				if (typeof Modernizr.mq !== 'undefined') {
-					if(Modernizr.mq('(min-width: '+size+'px)')) {
-						return true;
-					} else {
-						return false;
-					}
+
+					//Return the result of the match
+					return Modernizr.mq('(min-width: '+size+'px)');
 				}
 			}
 
@@ -115,7 +110,6 @@
 
 		//Returns the element for height calculations
 		function get_element( element ){
-			//throw new Error("Got to get_element");
 			//Check to see if we're finding child elements
 			if( options.child !== false ){
 				return element.find( options.child );
@@ -129,7 +123,7 @@
 			debug("Row: " + row + " Columns: " + columns + " Height: " + height);
 			debug('Setting row heights');
 
-			for (i = 0; i < columns; i++) {
+			for (var i = 0; i < columns; i++) {
 				//Get the element whose height we're setting
 				var element = get_element( self.eq( i + start) );
 				element.css('height', height + 'px');
