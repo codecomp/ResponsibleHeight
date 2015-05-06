@@ -6,12 +6,15 @@
 		 ========================================================================== */
 
 		var defaults = {
-			'global':	false,
-			'delay': 	200,
-			'widths': 	[],
-			'child': 	false,
-			'verbose': 	false
+			'global':		false,
+			'delay': 		200,
+			'widths': 		[],
+			'child': 		false,
+			'verbose': 		false,
+			'exclude_get': 	false,
+			'exclude_set': 	false
 		};
+
 		//Add missing variables to the options object from the defaults
 		options  	= $.extend({}, defaults, options);
 		//Set self to the elements that this function has been applied to
@@ -132,9 +135,17 @@
 			debug('Setting row heights');
 
 			for (var i = 0; i < columns; i++) {
+				//Get the current iteration
+				var element = self.eq( i + start);
+
+				//Check to see if we need to skip setting this elements height
+				if( options.exclude_set && element.is(options.exclude_set) ){
+					continue;
+				}
+
 				//Get the element whose height we're setting
-				var element = get_element( self.eq( i + start) );
-				element.css('height', height + 'px');
+				var target = get_element( element );
+				target.css('height', height + 'px');
 			}
 		}
 
@@ -148,14 +159,23 @@
 
 			self.each(function ( index ) {
 				debug(index);
+
+				//Get the current iteration
+				var element = $(this);
+
+				//Check to see if we need to skip getting this elements height
+				if( options.exclude_get && element.is(options.exclude_get) ){
+					return;
+				}
+
 				//Get the element whose size we will be controlling
-				var element = get_element( self.eq(index) );
+				var target = get_element( element );
 				//Set col to the current column
 				col++;
 				//Reset the blocks height to read it as its default
-				element.css('height', 'auto');
-				if (element.outerHeight() > height) {
-					height 	= element.outerHeight();
+				target.css('height', 'auto');
+				if (target.outerHeight() > height) {
+					height 	= target.outerHeight();
 				}
 				//if we've reached the end of a column
 				if( col == columns || (index+1) == total_columns){
