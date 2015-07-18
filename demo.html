@@ -9,11 +9,14 @@
 	<script>
 		jQuery(document).ready(function( $ ) {
 
+			//Set the default of verbose to be true for all uses of responsible height
+			$.fn.responsibleHeight.defaults.verbose = true;
+
+			//Initialise the plugin
 			$('.item').responsibleHeight({
-				'delay': 	200,
-				'child': 	'p',
-				'verbose': 	true,
-				'widths': 	[
+				delay: 		200,
+				child: 		'p',
+				widths: 	[
 					[1300, 10],
 					[1000, 8],
 					[700, 4],
@@ -22,9 +25,22 @@
 				]
 			});
 
+			//Destroy the plugin, remove heights and stop working on resize
+			$('.destroy').click(function(){
+				$('.item').responsibleHeight('destroy')
+			});
+
+			//Reinitialise the plugin
+			$('.reinit').click(function(){
+				$('.item').responsibleHeight('reinit')
+			});
+
 		});
 	</script>
 	<style>
+		body{
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		}
 		img{
 			max-width:100%;
 			height:auto;
@@ -82,6 +98,8 @@
 </head>
 <body>
 	<h1>Responsible height</h1>
+	<button class="destroy">Destroy</button>
+	<button class="reinit">Re Initialise</button>
 	<main>
 		<div class="item">
 			<img src="http://placehold.it/350x150">

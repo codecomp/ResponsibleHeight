@@ -1,5 +1,5 @@
 # ResponsibleHeight
-jQuery plugin to evenly height elements responsively in changing numbers of columns
+jQuery plugin to evenly height elements responsively in ever changing numbers of columns
 
 ## Installation
 
@@ -9,12 +9,14 @@ jQuery plugin to evenly height elements responsively in changing numbers of colu
 4. Enjoy
 
 ## Example Usage
+
+Here you can see how a simple call for this function runs. This will set the heights of every Paragraph with a desc class found inside every element with the item class.
 ```javascript
 jQuery(document).ready(function( $ ) {
 	$('.item').responsibleHeight({
-		'child': 	'p.desc',
-    	'verbose': 	true,
-		'widths': 	[
+		child: 		'p.desc',
+    	verbose: 	true,
+		widths: 	[
 			[1300, 10],
 			[1000, 8],
 			[700, 4],
@@ -23,6 +25,21 @@ jQuery(document).ready(function( $ ) {
 		]
 	});
 });
+```
+
+You can also set the globals for the plugin in the following way
+```javascript
+...
+$.fn.responsibleHeight.defaults.verbose = true; //Make all instances verbose
+$.fn.responsibleHeight.defaults.delay = 0; //Remove delay from all instances
+...
+```
+
+The plugin also now contains the ability to call methods which can be done in the following way
+```javascript
+...
+$('.item').responsibleHeight('destroy'); //Remove height and stop further resizing
+...
 ```
 
 ## Settings
@@ -37,17 +54,39 @@ exclude_set *(selector)* | false | Setting Exclude set with either a string or a
 widths *(array)* | empty Array | A multi dimensional array of pixel widths and columns starting from the heights to lowest. This checks if the size is greater than a size, if so it sets the columns.
 verbose *(boolean)* | false | Set this to true to log debugging information to console.
 
-## Contributing
+## Methods
 
-Why would you?
+Method | Details
+------------- | -------------
+refresh | Immediately trigger a recalculation of the heights for all elements  based off the existing settings 
+destroy | Removes the heights off all elements or their children and stops further processing
+reinit | Re initialises the plugin causing an immediate refresh and re binding the resizing of the window to trigger further refreshes
+
+## Roadmap
+
+Add callback functionality
+Add settings update method
+Add varying levels to verbose to avoid cluttering console log
 
 ## History
 
-TODO: Write history
+###?.?.?
+This started off as a very rough little function for a single website.
+It's only job was to resize some columns to be the same height with little regard for responsiveness.
+
+###1.0.0
+The Plugin was created from the rough functions and rebuilt from the ground up as a jQuery plugin, given options and was trialed with great success on multiple websites with as of yet little to no issues.
+
+Over time a couple of more useful options were added, such as a global option to set heights regardless of width and the exclusion options.
+
+##1.1.0
+A second update of the plugin lead the the framework being completely reworked.
+
+This update was to allow for the creation and use of method calls to the plugin along with a couple of major bug fixes to the plugin that had previously gone un notices. Despite the complete reworking of the framework the plugin remains completely compatible with existing websites.
 
 ## Credits
 
-TODO: Write credits
+Chris morris [http://codecomposer.co.uk]
 
 ## License
 
