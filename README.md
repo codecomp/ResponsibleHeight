@@ -79,7 +79,7 @@ The Plugin was created from the rough functions and rebuilt from the ground up a
 
 Over time a couple of more useful options were added, such as a global option to set heights regardless of width and the exclusion options.
 
-##1.1.0
+###1.1.0
 A second update of the plugin lead the the framework being completely reworked.
 
 This update was to allow for the creation and use of method calls to the plugin along with a couple of major bug fixes to the plugin that had previously gone un notices. Despite the complete reworking of the framework the plugin remains completely compatible with existing websites.
