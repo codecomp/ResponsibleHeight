@@ -31,7 +31,7 @@
 		 Logic
 		 ========================================================================== */
 
-		if (typeof options.widths == 'undefined' || options.widths.length === 0) {
+		if ( (typeof options.widths == 'undefined' || options.widths.length === 0) && !options.global ) {
 			debug('Widths options missing');
 			return false;
 		}
@@ -82,11 +82,6 @@
 		/* ==========================================================================
 		 Functions
 		 ========================================================================== */
-
-		if (typeof options.widths == 'undefined' || options.widths.length === 0) {
-			debug('Widths option not set');
-			return false;
-		}
 
 		//Check to see if the window is larger than the css media query size
 		function window_check(size){
