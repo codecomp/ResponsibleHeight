@@ -42,6 +42,19 @@ $('.item').responsibleHeight('destroy'); //Remove height and stop further resizi
 ...
 ```
 
+You can now pass callback functions as follows
+```javascript
+jQuery(document).ready(function( $ ) {
+	$('.item').responsibleHeight({
+		...
+		after_resize: function( element ){
+			alert('Resize completed');
+		}
+		...
+	});
+});
+```
+
 ## Settings
 
 Option  | Default | Details
@@ -53,6 +66,12 @@ exclude_get *(selector)* | false | Setting Exclude get with either a string or a
 exclude_set *(selector)* | false | Setting Exclude set with either a string or a jQuery selector will stop the element (or child element if specified) from having its height set.
 widths *(array)* | empty Array | A multi dimensional array of pixel widths and columns starting from the heights to lowest. This checks if the size is greater than a size, if so it sets the columns.
 verbose *(boolean)* | false | Set this to true to log debugging information to console.
+before_init *(function)* | null | Callback function called before initialisation.
+after_init *(function)* | null | Callback function called after initialisation has finished.
+window_resize *(function)* | null | Callback function called once when window resize is detected and will not fire until resize has completed and window is resided again.
+before_resize *(function)* | null | Callback function called before resize starts.
+after_resize *(function)* | null | Callback function called after resize has finished.
+after_destroy *(function)* | null | Callback function called after destroy method is called.
 
 ## Methods
 
@@ -64,7 +83,6 @@ reinit | Re initialises the plugin causing an immediate refresh and re binding t
 
 ## Roadmap
 
-Add callback functionality
 Add settings update method
 Add varying levels to verbose to avoid cluttering console log
 
@@ -83,6 +101,12 @@ Over time a couple of more useful options were added, such as a global option to
 A second update of the plugin lead the the framework being completely reworked.
 
 This update was to allow for the creation and use of method calls to the plugin along with a couple of major bug fixes to the plugin that had previously gone un notices. Despite the complete reworking of the framework the plugin remains completely compatible with existing websites.
+
+###1.2.0
+Call back functionality added to plugin.
+
+Call back options added:
+before_init, after_init, window_resize, before_resize, after_resize, after_destroy
 
 ## Credits
 

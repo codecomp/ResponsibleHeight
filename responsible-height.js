@@ -7,6 +7,7 @@
 	var opts; //Setup global option
 	var resizeId = setTimeout(function(){}, 100); //Setup empty timeout
 	var self; //Setup global to contain element plugin is called on
+	var pending = false; //Setup global to handle first check for resize
 
 	/* ==========================================================================
 		Methods
@@ -15,25 +16,31 @@
 	var methods = {
 		init : function(options) {
 
-			// Extend our default options with those provided.
-			// Note that the first argument to extend is an empty
-			// object – this is to keep from overriding our "defaults" object.
+			//Extend our default options with those provided.
+			//Note that the first argument to extend is an empty
+			//object – this is to keep from overriding our "defaults" object.
 			opts = $.extend( {}, $.fn.responsibleHeight.defaults, options );
+
+			//Fire the before_init callback
+			$.isFunction( opts.before_init ) && opts.before_init.call( this );
 
 			//log the options
 			debug(opts);
 
-			//Break if we don;t know what to do
+			//Break if we don't know what to do
 			if ( (typeof opts.widths == 'undefined' || opts.widths.length === 0) && !opts.global ) {
 				$.error( 'widths or global opts missing' );
 				return false;
 			}
 
-			// Setup resize on window resize
+			//Setup resize on window resize
 			$(window).on('resize', window_resize);
 
 			//run the resize once upon creation
 			resize();
+
+			//Fire the after_init callback
+			$.isFunction( opts.after_init ) && opts.after_init.call( this );
 		},
 		reinit : function() {
 			methods.init(opts);
@@ -53,6 +60,9 @@
 
 			//Remove forced heights on elements
 			reset_height_block();
+
+			//Fire the after_destroy callback
+			$.isFunction( opts.after_destroy ) && opts.after_destroy.call( this );
 		}
 	};
 
@@ -68,7 +78,7 @@
 		if ( methods[methodOrOptions] ) {
 			return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
 		} else if ( typeof methodOrOptions === 'object' || ! methodOrOptions ) {
-			// Default to "init"
+			//Default to "init"
 			return methods.init.apply( this, arguments );
 		} else {
 			$.error( 'Method ' +  methodOrOptions + ' does not exist on responsibleHeight' );
@@ -86,7 +96,13 @@
 		child: 			false,
 		verbose: 		false,
 		exclude_get: 	false,
-		exclude_set: 	false
+		exclude_set: 	false,
+		before_init:	null,
+		after_init:		null,
+		window_resize:	null,
+		before_resize:	null,
+		after_resize:	null,
+		after_destroy:	null
 	};
 
 	/* ==========================================================================
@@ -94,7 +110,17 @@
 	 ========================================================================== */
 
 	function window_resize() {
-		debug('trying to resize');
+
+		if( pending == false ){
+			debug('trying to resize');
+
+			//Stop window resize from repeatedly firing callback
+			pending = true;
+
+			//Fire the window_resize callback
+			$.isFunction( opts.window_resize ) && opts.window_resize.call( this );
+		}
+
 		if( opts.delay === 0 ){
 			//If the user chooses run resize function constantly during resize
 			resize();
@@ -108,6 +134,12 @@
 	}
 
 	function resize() {
+		//Fire the before_resize callback
+		$.isFunction( opts.before_resize ) && opts.before_resize.call( this );
+
+		//Allow window_resize callback to fire again
+		pending = false;
+
 		//If we are not using columns resize al elements globally
 		if(opts.global){
 			debug( 'Globally resizing' );
@@ -131,6 +163,9 @@
 				break;
 			}
 		}
+
+		//Fire the after_resize callback
+		$.isFunction( opts.after_resize ) && opts.after_resize.call( this );
 	}
 
 	//Check to see if the window is larger than the css media query size
