@@ -4,42 +4,34 @@
 
 	<title>Responsible Height</title>
 
-	<script src="jquery-1.11.2.min.js" type="text/javascript"></script>
-	<script src="responsible-height.js" type="text/javascript"></script>
-	<script>
-		jQuery(document).ready(function( $ ) {
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
 
-			//Set the default of verbose to be true for all uses of responsible height
-			$.fn.responsibleHeight.defaults.verbose = true;
-
-			//Initialise the plugin
-			$('.item').responsibleHeight({
-				delay: 		200,
-				child: 		'p',
-				widths: 	[
-					[1300, 10],
-					[1000, 8],
-					[700, 4],
-					[40, 2],
-					[0, 1]
-				]
-			});
-
-			//Destroy the plugin, remove heights and stop working on resize
-			$('.destroy').click(function(){
-				$('.item').responsibleHeight('destroy')
-			});
-
-			//Reinitialise the plugin
-			$('.reinit').click(function(){
-				$('.item').responsibleHeight('reinit')
-			});
-
-		});
-	</script>
 	<style>
 		body{
-			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		}
+		header{
+			text-align:center;
+			margin-bottom:40px;
+		}
+		h1{
+			text-transform:uppercase;
+			font-weight: 400;
+		}
+		button{
+			background: dimgrey;
+			color:#FFFFFF;
+			border:none;
+			padding:5px 10px;
+			margin:0 10px;
+			min-width:150px;
+			cursor: pointer;
+			-webkit-border-radius: 0;
+			-moz-border-radius: 0;
+			border-radius: 0;
+		}
+		button:hover{
+			background: darkgrey;
 		}
 		img{
 			max-width:100%;
@@ -53,6 +45,7 @@
 			text-align: center;
 			background: dimgrey;
 			color:#FFFFFF;
+			text-transform:uppercase;
 			box-sizing: border-box;
 			-moz-box-sizing: border-box;
 			-webkit-box-sizing: border-box;
@@ -95,11 +88,14 @@
 		}
 
 	</style>
+
 </head>
 <body>
-	<h1>Responsible height</h1>
-	<button class="destroy">Destroy</button>
-	<button class="reinit">Re Initialise</button>
+	<header>
+		<h1>Responsible height</h1>
+		<button class="destroy">Destroy</button>
+		<button class="reinit">Re Initialise</button>
+	</header>
 	<main>
 		<div class="item">
 			<img src="http://placehold.it/350x150">
@@ -202,5 +198,41 @@
 			<a class="button">View More</a>
 		</div>
 	</main>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="responsible-height.js" type="text/javascript"></script>
+
+	<script>
+		jQuery(document).ready(function( $ ) {
+
+			//Set the default of verbose to be true for all uses of responsible height
+			$.fn.responsibleHeight.defaults.verbose = true;
+
+			//Initialise the plugin
+			$('.item').responsibleHeight({
+				delay: 		200,
+				child: 		'p',
+				widths: 	[
+					[1300, 10],
+					[1000, 8],
+					[700, 4],
+					[40, 2],
+					[0, 1]
+				]
+			});
+
+			//Destroy the plugin, remove heights and stop working on resize
+			$('.destroy').click(function(){
+				$('.item').responsibleHeight('destroy')
+			});
+
+			//Reinitialise the plugin
+			$('.reinit').click(function(){
+				$('.item').responsibleHeight('reinit')
+			});
+
+		});
+	</script>
+
 </body>
 </html>
